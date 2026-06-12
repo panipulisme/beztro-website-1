@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tentang Kami — Beztro Electronics</title>
+  <meta name="description" content="Mengenal Beztro Electronics lebih dekat. Distributor small home appliances terpercaya sejak 2018." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .about-hero { background: var(--navy); padding: 60px 40px; text-align: center; }
+    .about-hero .eyebrow { font-size: 12px; color: #A0B0C8; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; display: block; }
+    .about-hero h1 { font-size: 30px; font-weight: 600; color: #fff; margin-bottom: 16px; line-height: 1.35; }
+    .about-hero p { font-size: 15px; color: #A8C0D8; max-width: 540px; margin: 0 auto; line-height: 1.85; }
+
+    .stats-bar { background: var(--navy-dark); display: flex; }
+    .stat-bar-item { flex: 1; text-align: center; padding: 22px 16px; border-right: 1px solid rgba(255,255,255,0.08); }
+    .stat-bar-item:last-child { border-right: none; }
+    .stat-bar-item .num { font-size: 28px; font-weight: 700; color: #fff; }
+    .stat-bar-item .label { font-size: 12px; color: #A0B0C8; margin-top: 4px; }
+
+    .story-section { background: #fff; padding: 64px 40px; display: flex; gap: 48px; align-items: center; flex-wrap: wrap; }
+    .story-text { flex: 1; min-width: 260px; }
+    .story-text h2 { font-size: 24px; font-weight: 600; color: var(--navy); margin-bottom: 16px; line-height: 1.35; }
+    .story-text p { font-size: 14px; color: var(--gray-700); line-height: 1.9; margin-bottom: 14px; }
+    .story-visual { flex: 0 0 280px; display: flex; flex-direction: column; gap: 12px; }
+    .story-img-main { background: var(--gray-50); border-radius: 12px; border: 1px solid var(--border); height: 180px; display: flex; align-items: center; justify-content: center; }
+    .story-img-main i { font-size: 72px; color: var(--gray-400); }
+    .story-awards { display: flex; gap: 10px; }
+    .award-card { flex: 1; border-radius: 10px; padding: 14px; text-align: center; }
+    .award-card.navy { background: var(--navy); }
+    .award-card.light { background: var(--gray-50); border: 1px solid var(--border); }
+    .award-card i { font-size: 24px; display: block; margin-bottom: 6px; }
+    .award-card .award-title { font-size: 12px; font-weight: 600; }
+    .award-card .award-sub { font-size: 10px; margin-top: 2px; }
+
+    .visi-misi { background: var(--gray-50); padding: 64px 40px; }
+    .visi-misi-grid { display: flex; gap: 18px; margin-top: 32px; flex-wrap: wrap; }
+    .visi-card { flex: 1; min-width: 220px; background: var(--navy); border-radius: 12px; padding: 28px; }
+    .visi-card .icon-wrap { width: 44px; height: 44px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .visi-card h3 { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 10px; }
+    .visi-card p { font-size: 13px; color: #A8C0D8; line-height: 1.8; }
+    .misi-card { flex: 2; min-width: 280px; background: #fff; border-radius: 12px; border: 1px solid var(--border); padding: 28px; }
+    .misi-card .icon-wrap { width: 44px; height: 44px; background: #EEF2FF; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .misi-card h3 { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 14px; }
+    .misi-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
+    .misi-dot { width: 20px; height: 20px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .misi-dot i { font-size: 11px; color: #fff; }
+    .misi-item p { font-size: 13px; color: var(--gray-700); line-height: 1.65; }
+
+    .nilai-section { background: #fff; padding: 64px 40px; }
+    .nilai-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-top: 32px; }
+    .nilai-card { background: var(--gray-50); border-radius: 12px; padding: 24px; text-align: center; transition: transform 0.2s; }
+    .nilai-card:hover { transform: translateY(-2px); }
+    .nilai-icon { width: 48px; height: 48px; background: #EEF2FF; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
+    .nilai-icon i { font-size: 24px; color: var(--navy); }
+    .nilai-card h4 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+    .nilai-card p { font-size: 12px; color: var(--gray-600); line-height: 1.7; }
+
+    .team-section { background: var(--gray-50); padding: 64px 40px; }
+    .team-grid { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+    .team-card { background: #fff; border-radius: 12px; border: 1px solid var(--border); padding: 24px; text-align: center; width: 160px; transition: transform 0.2s; }
+    .team-card:hover { transform: translateY(-2px); }
+    .team-avatar { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
+    .team-avatar span { font-size: 20px; font-weight: 600; color: #fff; }
+    .team-name { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+    .team-role { font-size: 11px; color: var(--gray-600); margin-bottom: 12px; }
+    .team-links { display: flex; justify-content: center; gap: 8px; }
+    .team-links i { font-size: 16px; color: var(--gray-400); cursor: pointer; transition: color 0.2s; }
+    .team-links i:hover { color: var(--navy); }
+
+    .timeline-section { background: #fff; padding: 64px 40px; }
+    .timeline { position: relative; margin-top: 32px; padding-left: 32px; }
+    .timeline::before { content: ''; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+    .timeline-item { position: relative; padding-bottom: 28px; }
+    .timeline-dot { position: absolute; left: -28px; top: 2px; width: 18px; height: 18px; border-radius: 50%; background: var(--navy); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--navy); }
+    .timeline-year { font-size: 12px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .timeline-title { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+    .timeline-desc { font-size: 13px; color: var(--gray-600); line-height: 1.65; }
+
+    .cta-section { background: var(--navy); padding: 64px 40px; text-align: center; }
+    .cta-section h2 { font-size: 26px; font-weight: 600; color: #fff; margin-bottom: 12px; }
+    .cta-section p { font-size: 15px; color: #A8C0D8; margin-bottom: 28px; line-height: 1.8; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+    .cta-contacts { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+    .cta-contact-item { display: flex; align-items: center; gap: 8px; }
+    .cta-contact-item i { color: #A0B0C8; font-size: 16px; }
+    .cta-contact-item span { font-size: 13px; color: #A8C0D8; }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <span><i class="ti ti-truck" style="margin-right:6px;"></i>Gratis ongkir untuk pembelian di atas Rp 300.000</span>
+    <div class="topbar-links"><a href="#">Lacak Pesanan</a><a href="#">Hubungi Kami</a><a href="#">B2B / Reseller</a></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html" class="logo-wrap"><span class="logo-name">beztro</span><span class="logo-sub">Electronics</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Beranda</a></li>
+      <li><a href="produk.html">Produk</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="tentang-kami.html" class="active">Tentang Kami</a></li>
+    </ul>
+    <div class="nav-actions">
+      <div class="search-box"><i class="ti ti-search"></i><span>Cari produk...</span></div>
+      <div class="cart-icon"><i class="ti ti-shopping-cart"></i><span class="cart-badge">0</span></div>
+      <div class="user-icon"><i class="ti ti-user"></i></div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <span class="eyebrow">Mengenal Kami Lebih Dekat</span>
+    <h1>Kami Hadir untuk Membuat<br>Rumah Anda Lebih Nyaman</h1>
+    <p>Beztro Electronics adalah distributor terpercaya small home appliances yang berkomitmen menghadirkan produk berkualitas dengan harga terjangkau untuk keluarga Indonesia.</p>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-bar-item"><p class="num">2018</p><p class="label">Tahun Berdiri</p></div>
+    <div class="stat-bar-item"><p class="num">10.000+</p><p class="label">Produk Terjual</p></div>
+    <div class="stat-bar-item"><p class="num">500+</p><p class="label">Mitra Reseller</p></div>
+    <div class="stat-bar-item"><p class="num">34</p><p class="label">Provinsi Terjangkau</p></div>
+    <div class="stat-bar-item"><p class="num">4.8★</p><p class="label">Rating Pelanggan</p></div>
+  </div>
+
+  <!-- STORY -->
+  <section class="story-section">
+    <div class="story-text">
+      <span class="section-label">Kisah Kami</span>
+      <h2>Dari Garasi Kecil Menuju Distributor Nasional</h2>
+      <p>Beztro Electronics lahir pada tahun 2018 dari sebuah visi sederhana: menghadirkan peralatan rumah tangga berkualitas tinggi yang bisa dijangkau oleh semua kalangan masyarakat Indonesia.</p>
+      <p>Berawal dari gudang kecil di Jakarta, kami terus berkembang dan kini telah melayani lebih dari 500 mitra reseller dan ribuan pelanggan langsung di seluruh nusantara.</p>
+      <p>Hari ini, Beztro bukan hanya sebuah distributor — kami adalah mitra terpercaya untuk keluarga dan pebisnis Indonesia yang ingin menghadirkan kenyamanan dalam kehidupan sehari-hari.</p>
+    </div>
+    <div class="story-visual">
+      <div class="story-img-main"><i class="ti ti-building-store"></i></div>
+      <div class="story-awards">
+        <div class="award-card navy">
+          <i class="ti ti-award" style="color:#F59E0B;"></i>
+          <p class="award-title" style="color:#fff;">Top Distributor</p>
+          <p class="award-sub" style="color:#A0B0C8;">2022 & 2023</p>
+        </div>
+        <div class="award-card light">
+          <i class="ti ti-certificate" style="color:var(--navy);"></i>
+          <p class="award-title" style="color:var(--navy);">ISO Certified</p>
+          <p class="award-sub" style="color:var(--gray-600);">Standar Internasional</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline-section">
+    <div style="text-align:center;">
+      <span class="section-label">Perjalanan Kami</span>
+      <h2 class="section-title">Milestone Beztro</h2>
+    </div>
+    <div style="max-width:600px; margin: 32px auto 0;">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <p class="timeline-year">2018</p>
+          <p class="timeline-title">Beztro Electronics Didirikan</p>
+          <p class="timeline-desc">Memulai distribusi dari gudang kecil di Jakarta dengan 3 lini produk pertama.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <p class="timeline-year">2019</p>
+          <p class="timeline-title">Ekspansi ke Marketplace</p>
+          <p class="timeline-desc">Membuka toko resmi di Tokopedia, Shopee, dan Lazada. Penjualan meningkat 300%.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <p class="timeline-year">2021</p>
+          <p class="timeline-title">Program Reseller Nasional</p>
+          <p class="timeline-desc">Meluncurkan program B2B reseller dengan 100+ mitra aktif di 15 provinsi.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <p class="timeline-year">2022</p>
+          <p class="timeline-title">Top Distributor Award</p>
+          <p class="timeline-desc">Menerima penghargaan Top Distributor Small Home Appliances kategori nasional.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <p class="timeline-year">2024</p>
+          <p class="timeline-title">Aplikasi Mobile Beztro Diluncurkan</p>
+          <p class="timeline-desc">Aplikasi Beztro tersedia di Google Play Store untuk memudahkan pembelian langsung.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--accent);"></div>
+          <p class="timeline-year" style="color:var(--accent);">2025</p>
+          <p class="timeline-title">Website Resmi & Direct Sales</p>
+          <p class="timeline-desc">Meluncurkan website resmi beztro.id dengan fitur transaksi langsung dan kanal B2B digital.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISI MISI -->
+  <section class="visi-misi">
+    <div style="text-align:center;">
+      <span class="section-label">Arah & Tujuan</span>
+      <h2 class="section-title">Visi & Misi Beztro</h2>
+    </div>
+    <div class="visi-misi-grid">
+      <div class="visi-card">
+        <div class="icon-wrap"><i class="ti ti-eye" style="font-size:22px;color:#F59E0B;"></i></div>
+        <h3>Visi</h3>
+        <p>Menjadi distributor small home appliances terkemuka di Asia Tenggara yang dipercaya oleh jutaan keluarga dan mitra bisnis.</p>
+      </div>
+      <div class="misi-card">
+        <div class="icon-wrap"><i class="ti ti-target" style="font-size:22px;color:var(--navy);"></i></div>
+        <h3>Misi</h3>
+        <div class="misi-item"><div class="misi-dot"><i class="ti ti-check"></i></div><p>Menyediakan produk berkualitas tinggi dengan harga yang kompetitif dan terjangkau untuk semua kalangan.</p></div>
+        <div class="misi-item"><div class="misi-dot"><i class="ti ti-check"></i></div><p>Membangun ekosistem distribusi yang kuat dan merata di seluruh wilayah Indonesia.</p></div>
+        <div class="misi-item"><div class="misi-dot"><i class="ti ti-check"></i></div><p>Memberikan layanan pelanggan terbaik dengan respons cepat dan solusi nyata.</p></div>
+        <div class="misi-item"><div class="misi-dot"><i class="ti ti-check"></i></div><p>Mendukung pertumbuhan mitra reseller dengan program yang berkelanjutan dan saling menguntungkan.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NILAI -->
+  <section class="nilai-section">
+    <div style="text-align:center;">
+      <span class="section-label">Yang Kami Pegang</span>
+      <h2 class="section-title">Nilai-Nilai Beztro</h2>
+    </div>
+    <div class="nilai-grid">
+      <div class="nilai-card"><div class="nilai-icon"><i class="ti ti-shield-check"></i></div><h4>Integritas</h4><p>Jujur dan transparan dalam setiap transaksi dan komunikasi dengan pelanggan maupun mitra.</p></div>
+      <div class="nilai-card"><div class="nilai-icon"><i class="ti ti-star"></i></div><h4>Kualitas</h4><p>Hanya produk terbaik yang lolos standar kurasi ketat tim Beztro sebelum sampai ke tangan Anda.</p></div>
+      <div class="nilai-card"><div class="nilai-icon"><i class="ti ti-users"></i></div><h4>Kemitraan</h4><p>Tumbuh bersama mitra reseller dan pelanggan adalah prioritas utama dalam setiap keputusan bisnis.</p></div>
+      <div class="nilai-card"><div class="nilai-icon"><i class="ti ti-rocket"></i></div><h4>Inovasi</h4><p>Terus berkembang dan berinovasi mengikuti kebutuhan pasar dan perkembangan teknologi terkini.</p></div>
+    </div>
+  </section>
+
+  <!-- TIM -->
+  <section class="team-section">
+    <div style="text-align:center;">
+      <span class="section-label">Orang-Orang di Balik Beztro</span>
+      <h2 class="section-title">Tim Kami</h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar" style="background:#2D3F5F;"><span>AR</span></div>
+        <p class="team-name">Ahmad Rizky</p>
+        <p class="team-role">CEO & Founder</p>
+        <div class="team-links"><i class="ti ti-brand-linkedin"></i><i class="ti ti-mail"></i></div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:#3A5278;"><span>SW</span></div>
+        <p class="team-name">Siti Wulandari</p>
+        <p class="team-role">COO</p>
+        <div class="team-links"><i class="ti ti-brand-linkedin"></i><i class="ti ti-mail"></i></div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:#4A6490;"><span>BP</span></div>
+        <p class="team-name">Budi Prasetyo</p>
+        <p class="team-role">Head of Sales</p>
+        <div class="team-links"><i class="ti ti-brand-linkedin"></i><i class="ti ti-mail"></i></div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:#1E2D45;"><span>DN</span></div>
+        <p class="team-name">Dewi Nuraini</p>
+        <p class="team-role">Digital Marketing</p>
+        <div class="team-links"><i class="ti ti-brand-linkedin"></i><i class="ti ti-mail"></i></div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:#2D4A6A;"><span>RP</span></div>
+        <p class="team-name">Reza Pratama</p>
+        <p class="team-role">Head of Logistics</p>
+        <div class="team-links"><i class="ti ti-brand-linkedin"></i><i class="ti ti-mail"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="reseller">
+    <h2>Ada Pertanyaan atau Ingin Bermitra?</h2>
+    <p>Tim kami siap membantu Anda. Hubungi kami untuk informasi produk, kemitraan reseller, atau pertanyaan lainnya.</p>
+    <div class="cta-buttons">
+      <a href="mailto:hello@beztro.id" class="btn btn-accent">Hubungi Kami <i class="ti ti-mail"></i></a>
+      <a href="#" class="btn btn-outline-white">Daftar Reseller <i class="ti ti-arrow-right"></i></a>
+    </div>
+    <div class="cta-contacts">
+      <div class="cta-contact-item"><i class="ti ti-mail"></i><span>hello@beztro.id</span></div>
+      <div class="cta-contact-item"><i class="ti ti-brand-whatsapp"></i><span>+62 812-3456-7890</span></div>
+      <div class="cta-contact-item"><i class="ti ti-map-pin"></i><span>Jakarta, Indonesia</span></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="logo-wrap"><span class="logo-name">beztro</span><span class="logo-sub">Electronics</span></a><p>Distributor terpercaya small home appliances untuk rumah tangga dan bisnis di Indonesia.</p><div class="footer-socials"><a href="#" class="social-btn"><i class="ti ti-brand-instagram"></i></a><a href="#" class="social-btn"><i class="ti ti-brand-facebook"></i></a><a href="#" class="social-btn"><i class="ti ti-brand-tiktok"></i></a><a href="#" class="social-btn"><i class="ti ti-brand-youtube"></i></a></div></div>
+      <div class="footer-col"><h4>Navigasi</h4><ul><li><a href="index.html">Beranda</a></li><li><a href="produk.html">Produk</a></li><li><a href="blog.html">Blog</a></li><li><a href="tentang-kami.html">Tentang Kami</a></li></ul></div>
+      <div class="footer-col"><h4>Layanan</h4><ul><li><a href="#">Lacak Pesanan</a></li><li><a href="#">Kebijakan Retur</a></li><li><a href="#">FAQ</a></li><li><a href="#">B2B / Reseller</a></li></ul></div>
+      <div class="footer-col"><h4>Hubungi Kami</h4><div class="footer-contact-item"><i class="ti ti-mail"></i><span>hello@beztro.id</span></div><div class="footer-contact-item"><i class="ti ti-brand-whatsapp"></i><span>+62 812-3456-7890</span></div><div class="footer-contact-item"><i class="ti ti-map-pin"></i><span>Jakarta, Indonesia</span></div></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Beztro Electronics. All rights reserved.</p><div class="footer-bottom-links"><a href="#">Kebijakan Privasi</a><a href="#">Syarat & Ketentuan</a></div></div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

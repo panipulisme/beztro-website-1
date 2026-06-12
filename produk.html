@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produk — Beztro Electronics</title>
+  <meta name="description" content="Temukan koleksi lengkap small home appliances Beztro Electronics. Filter berdasarkan kategori, harga, dan rating." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .listing-body { background: var(--gray-50); padding: 28px 40px; display: flex; gap: 22px; }
+    .sidebar { width: 210px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px; }
+    .sidebar-card { background: #fff; border-radius: 12px; border: 1px solid var(--border); padding: 18px; }
+    .sidebar-card h4 { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 14px; }
+    .filter-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; cursor: pointer; }
+    .filter-item-left { display: flex; align-items: center; gap: 8px; }
+    .filter-check { width: 15px; height: 15px; border-radius: 3px; border: 1.5px solid var(--gray-400); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .filter-check.checked { background: var(--navy); border-color: var(--navy); }
+    .filter-check.checked::after { content: "✓"; color: #fff; font-size: 9px; }
+    .filter-item span { font-size: 12px; color: var(--gray-700); }
+    .filter-item .count { font-size: 11px; color: var(--gray-500); }
+    .price-inputs { display: flex; gap: 8px; margin-bottom: 12px; }
+    .price-input-box { flex: 1; border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; }
+    .price-input-box p:first-child { font-size: 10px; color: var(--gray-500); margin-bottom: 2px; }
+    .price-input-box p:last-child { font-size: 12px; color: var(--navy); }
+    .price-range-bar { height: 4px; background: var(--border); border-radius: 4px; position: relative; margin: 6px 0 4px; }
+    .price-range-fill { position: absolute; left: 10%; right: 25%; height: 4px; background: var(--navy); border-radius: 4px; }
+
+    .product-main { flex: 1; min-width: 0; }
+    .listing-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .listing-toolbar p { font-size: 13px; color: var(--gray-600); }
+    .sort-wrap { display: flex; align-items: center; gap: 10px; }
+    .sort-select { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 12px; color: var(--navy); cursor: pointer; font-family: var(--font); }
+    .view-toggle { display: flex; gap: 4px; }
+    .view-btn { width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 5px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: #fff; }
+    .view-btn.active { background: var(--navy); border-color: var(--navy); }
+    .view-btn.active i { color: #fff; }
+    .view-btn i { font-size: 15px; color: var(--gray-400); }
+    .product-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+
+    /* DETAIL VIEW (hidden by default, shown via JS) */
+    .detail-view { display: none; background: #fff; padding: 28px 40px; }
+    .detail-view.active { display: block; }
+    .detail-layout { display: flex; gap: 32px; flex-wrap: wrap; }
+    .detail-gallery { flex: 0 0 300px; }
+    .main-img { background: var(--gray-50); border-radius: 12px; border: 1px solid var(--border); height: 250px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+    .main-img i { font-size: 100px; color: var(--gray-400); }
+    .thumb-strip { display: flex; gap: 10px; }
+    .thumb { flex: 1; height: 68px; background: var(--gray-50); border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .thumb.active { border-color: var(--navy); border-width: 2px; }
+    .thumb i { font-size: 26px; color: var(--gray-400); }
+    .detail-info { flex: 1; min-width: 0; }
+    .detail-tags { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+    .detail-title { font-size: 22px; font-weight: 600; color: var(--navy); margin-bottom: 10px; line-height: 1.3; }
+    .detail-meta { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; }
+    .detail-meta span { font-size: 13px; color: var(--gray-600); }
+    .detail-rating { color: #F59E0B; font-size: 14px; }
+    .price-box { background: var(--gray-50); border-radius: 10px; padding: 16px; margin-bottom: 18px; }
+    .price-main { font-size: 28px; font-weight: 700; color: var(--navy); }
+    .price-compare { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+    .price-compare .old { font-size: 14px; color: var(--gray-500); text-decoration: line-through; }
+    .price-compare .save { background: #FEE2E2; color: #991B1B; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+    .price-note { font-size: 12px; color: var(--gray-600); margin-top: 4px; }
+    .color-label { font-size: 13px; font-weight: 500; color: var(--navy); margin-bottom: 10px; }
+    .color-options { display: flex; gap: 10px; margin-bottom: 18px; }
+    .color-option { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; transition: border-color 0.2s; }
+    .color-option.selected { border-color: var(--navy); }
+    .qty-label { font-size: 13px; font-weight: 500; color: var(--navy); margin-bottom: 10px; }
+    .qty-wrap { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 8px; width: fit-content; overflow: hidden; margin-bottom: 18px; }
+    .qty-btn { background: var(--gray-50); border: none; padding: 9px 16px; cursor: pointer; font-size: 18px; color: var(--navy); font-family: var(--font); }
+    .qty-num { padding: 9px 22px; font-size: 15px; font-weight: 500; color: var(--navy); border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+    .detail-cta { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+    .detail-perks { display: flex; gap: 20px; flex-wrap: wrap; }
+    .perk { display: flex; align-items: center; gap: 6px; }
+    .perk i { font-size: 16px; }
+    .perk span { font-size: 12px; color: var(--gray-600); }
+    .tabs { display: flex; border-bottom: 1px solid var(--border); margin: 32px 0 20px; }
+    .tab-btn { padding: 10px 24px; font-size: 13px; cursor: pointer; color: var(--gray-500); border-bottom: 2px solid transparent; background: none; border-left: none; border-right: none; border-top: none; font-family: var(--font); }
+    .tab-btn.active { color: var(--navy); font-weight: 500; border-bottom-color: var(--navy); }
+    .related-title { font-size: 17px; font-weight: 600; color: var(--navy); margin-bottom: 14px; }
+    .related-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+    .related-card { background: var(--gray-50); border-radius: 10px; padding: 14px; display: flex; gap: 12px; align-items: center; cursor: pointer; transition: background 0.2s; }
+    .related-card:hover { background: var(--gray-100); }
+    .related-thumb { width: 52px; height: 52px; background: var(--gray-200); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .related-thumb i { font-size: 24px; color: var(--gray-400); }
+    .related-name { font-size: 12px; font-weight: 500; color: var(--navy); line-height: 1.35; margin-bottom: 4px; }
+    .related-price { font-size: 13px; font-weight: 600; color: var(--navy); }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <span><i class="ti ti-truck" style="margin-right:6px;"></i>Gratis ongkir untuk pembelian di atas Rp 300.000</span>
+    <div class="topbar-links">
+      <a href="#">Lacak Pesanan</a>
+      <a href="#">Hubungi Kami</a>
+      <a href="#">B2B / Reseller</a>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html" class="logo-wrap"><span class="logo-name">beztro</span><span class="logo-sub">Electronics</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Beranda</a></li>
+      <li><a href="produk.html" class="active">Produk</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="tentang-kami.html">Tentang Kami</a></li>
+    </ul>
+    <div class="nav-actions">
+      <div class="search-box"><i class="ti ti-search"></i><span>Cari produk...</span></div>
+      <div class="cart-icon"><i class="ti ti-shopping-cart"></i><span class="cart-badge">0</span></div>
+      <div class="user-icon"><i class="ti ti-user"></i></div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb" id="breadcrumb">
+    <a href="index.html">Beranda</a><span class="sep">/</span><span class="current">Produk</span>
+  </div>
+
+  <!-- LISTING VIEW -->
+  <div class="listing-body" id="listing-view">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h4>Kategori</h4>
+        <div class="filter-item filter-category-item active" data-cat="all">
+          <div class="filter-item-left"><div class="filter-check checked"></div><span>Semua Produk</span></div>
+          <span class="count">134</span>
+        </div>
+        <div class="filter-item filter-category-item" data-cat="air-purifier">
+          <div class="filter-item-left"><div class="filter-check"></div><span>Air Purifier</span></div>
+          <span class="count">24</span>
+        </div>
+        <div class="filter-item filter-category-item" data-cat="blender">
+          <div class="filter-item-left"><div class="filter-check"></div><span>Blender</span></div>
+          <span class="count">18</span>
+        </div>
+        <div class="filter-item filter-category-item" data-cat="coffee-maker">
+          <div class="filter-item-left"><div class="filter-check"></div><span>Coffee Maker</span></div>
+          <span class="count">12</span>
+        </div>
+        <div class="filter-item filter-category-item" data-cat="fan">
+          <div class="filter-item-left"><div class="filter-check"></div><span>Fan & AC</span></div>
+          <span class="count">30</span>
+        </div>
+        <div class="filter-item filter-category-item" data-cat="rice-cooker">
+          <div class="filter-item-left"><div class="filter-check"></div><span>Rice Cooker</span></div>
+          <span class="count">15</span>
+        </div>
+        <div class="filter-item filter-category-item" data-cat="vacuum">
+          <div class="filter-item-left"><div class="filter-check"></div><span>Vacuum Cleaner</span></div>
+          <span class="count">10</span>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <h4>Rentang Harga</h4>
+        <div class="price-inputs">
+          <div class="price-input-box"><p>Min</p><p>Rp 100.000</p></div>
+          <div class="price-input-box"><p>Max</p><p>Rp 2.000.000</p></div>
+        </div>
+        <div class="price-range-bar"><div class="price-range-fill"></div></div>
+      </div>
+      <div class="sidebar-card">
+        <h4>Rating</h4>
+        <div class="filter-item"><div class="filter-item-left"><div class="filter-check checked"></div><span style="color:#F59E0B;">★★★★★</span></div><span class="count">(5.0)</span></div>
+        <div class="filter-item"><div class="filter-item-left"><div class="filter-check"></div><span style="color:#F59E0B;">★★★★</span><span style="color:#E2E8F0;">★</span></div><span class="count">(4.0+)</span></div>
+        <div class="filter-item"><div class="filter-item-left"><div class="filter-check"></div><span style="color:#F59E0B;">★★★</span><span style="color:#E2E8F0;">★★</span></div><span class="count">(3.0+)</span></div>
+      </div>
+      <button class="btn btn-primary" style="width:100%; justify-content:center;">Terapkan Filter</button>
+    </aside>
+
+    <div class="product-main">
+      <div class="listing-toolbar">
+        <p>Menampilkan <strong>134 produk</strong></p>
+        <div class="sort-wrap">
+          <span style="font-size:12px;color:var(--gray-600);">Urutkan:</span>
+          <select class="sort-select"><option>Terpopuler</option><option>Harga Terendah</option><option>Harga Tertinggi</option><option>Rating Tertinggi</option><option>Terbaru</option></select>
+          <div class="view-toggle">
+            <button class="view-btn active" id="grid-view-btn"><i class="ti ti-layout-grid"></i></button>
+            <button class="view-btn" id="list-view-btn"><i class="ti ti-layout-list"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-grid" id="product-grid">
+        <div class="product-card" onclick="showDetail('apx1')">
+          <div class="product-img"><i class="ti ti-device-speaker"></i><span class="badge badge-hot badge-pos">HOT</span><button class="wishlist-btn" onclick="event.stopPropagation()"><i class="ti ti-heart"></i></button></div>
+          <div class="product-info">
+            <p class="product-cat">Air Purifier</p>
+            <p class="product-name">Beztro Pro X1 HEPA Filter</p>
+            <p class="product-rating">★★★★★ <span>(128)</span></p>
+            <div class="product-footer">
+              <div><p class="product-price-old">Rp 850.000</p><p class="product-price">Rp 699.000</p></div>
+              <button class="btn btn-primary btn-sm add-to-cart" onclick="event.stopPropagation()" data-id="apx1" data-name="Beztro Pro X1" data-price="699000">+ Keranjang</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card" onclick="showDetail('bm1000')">
+          <div class="product-img"><i class="ti ti-blender"></i><button class="wishlist-btn" onclick="event.stopPropagation()"><i class="ti ti-heart"></i></button></div>
+          <div class="product-info">
+            <p class="product-cat">Blender</p>
+            <p class="product-name">Beztro Blend Master 1000W</p>
+            <p class="product-rating">★★★★☆ <span>(94)</span></p>
+            <div class="product-footer">
+              <p class="product-price">Rp 425.000</p>
+              <button class="btn btn-primary btn-sm add-to-cart" onclick="event.stopPropagation()" data-id="bm1000" data-name="Blend Master 1000W" data-price="425000">+ Keranjang</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card" onclick="showDetail('bp-drip')">
+          <div class="product-img"><i class="ti ti-coffee"></i><span class="badge badge-new badge-pos">NEW</span><button class="wishlist-btn" onclick="event.stopPropagation()"><i class="ti ti-heart"></i></button></div>
+          <div class="product-info">
+            <p class="product-cat">Coffee Maker</p>
+            <p class="product-name">Beztro Brew Pro Drip Coffee</p>
+            <p class="product-rating">★★★★★ <span>(57)</span></p>
+            <div class="product-footer">
+              <p class="product-price">Rp 380.000</p>
+              <button class="btn btn-primary btn-sm add-to-cart" onclick="event.stopPropagation()" data-id="bp-drip" data-name="Brew Pro Drip Coffee" data-price="380000">+ Keranjang</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card" onclick="showDetail('sf16')">
+          <div class="product-img"><i class="ti ti-snowflake"></i><button class="wishlist-btn" onclick="event.stopPropagation()"><i class="ti ti-heart"></i></button></div>
+          <div class="product-info">
+            <p class="product-cat">Desk Fan</p>
+            <p class="product-name">Beztro Silent Fan 16" 3-Speed</p>
+            <p class="product-rating">★★★★☆ <span>(211)</span></p>
+            <div class="product-footer">
+              <p class="product-price">Rp 245.000</p>
+              <button class="btn btn-primary btn-sm add-to-cart" onclick="event.stopPropagation()" data-id="sf16" data-name="Silent Fan 16" data-price="245000">+ Keranjang</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card" onclick="showDetail('sc18')">
+          <div class="product-img"><i class="ti ti-cooker"></i><button class="wishlist-btn" onclick="event.stopPropagation()"><i class="ti ti-heart"></i></button></div>
+          <div class="product-info">
+            <p class="product-cat">Rice Cooker</p>
+            <p class="product-name">Beztro Smart Cook 1.8L Digital</p>
+            <p class="product-rating">★★★★★ <span>(76)</span></p>
+            <div class="product-footer">
+              <p class="product-price">Rp 310.000</p>
+              <button class="btn btn-primary btn-sm add-to-cart" onclick="event.stopPropagation()" data-id="sc18" data-name="Smart Cook 1.8L" data-price="310000">+ Keranjang</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card" onclick="showDetail('sp2200')">
+          <div class="product-img"><i class="ti ti-vacuum-cleaner"></i><button class="wishlist-btn" onclick="event.stopPropagation()"><i class="ti ti-heart"></i></button></div>
+          <div class="product-info">
+            <p class="product-cat">Vacuum Cleaner</p>
+            <p class="product-name">Beztro Suction Pro 2200W</p>
+            <p class="product-rating">★★★★☆ <span>(43)</span></p>
+            <div class="product-footer">
+              <p class="product-price">Rp 580.000</p>
+              <button class="btn btn-primary btn-sm add-to-cart" onclick="event.stopPropagation()" data-id="sp2200" data-name="Suction Pro 2200W" data-price="580000">+ Keranjang</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination">
+        <button class="page-btn"><i class="ti ti-chevron-left"></i></button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn"><i class="ti ti-chevron-right"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL VIEW -->
+  <div class="detail-view" id="detail-view">
+    <div class="breadcrumb" style="padding:10px 0 16px; background:none;">
+      <a href="index.html">Beranda</a><span class="sep">/</span>
+      <a href="produk.html" onclick="showListing(); return false;">Produk</a><span class="sep">/</span>
+      <span class="current" id="detail-breadcrumb">Beztro Pro X1</span>
+    </div>
+    <div class="detail-layout">
+      <div class="detail-gallery">
+        <div class="main-img"><i class="ti ti-device-speaker" id="detail-icon"></i></div>
+        <div class="thumb-strip">
+          <div class="thumb active"><i class="ti ti-device-speaker"></i></div>
+          <div class="thumb"><i class="ti ti-device-speaker"></i></div>
+          <div class="thumb"><i class="ti ti-device-speaker"></i></div>
+          <div class="thumb"><i class="ti ti-device-speaker"></i></div>
+        </div>
+      </div>
+      <div class="detail-info">
+        <div class="detail-tags">
+          <span class="badge badge-cat" id="detail-cat-badge">Air Purifier</span>
+          <span class="badge badge-hot">Bestseller</span>
+          <span style="background:#FEE2E2;color:#991B1B;font-size:10px;padding:3px 10px;border-radius:4px;font-weight:600;">Stok Terbatas</span>
+        </div>
+        <h1 class="detail-title" id="detail-name">Beztro Pro X1 HEPA Filter Air Purifier</h1>
+        <div class="detail-meta">
+          <span class="detail-rating">★★★★★</span>
+          <strong id="detail-rating-val">4.9</strong>
+          <span id="detail-reviews">128 ulasan</span>
+          <span>|</span>
+          <span>1.240 terjual</span>
+        </div>
+        <div class="price-box">
+          <div class="price-compare"><span class="old" id="detail-price-old">Rp 850.000</span><span class="save">Hemat 18%</span></div>
+          <p class="price-main" id="detail-price">Rp 699.000</p>
+          <p class="price-note">Harga sudah termasuk PPN</p>
+        </div>
+        <p class="color-label">Warna</p>
+        <div class="color-options">
+          <div class="color-option selected" style="background:#fff;border-color:var(--navy);"></div>
+          <div class="color-option" style="background:var(--navy);"></div>
+          <div class="color-option" style="background:#E5E7EB;"></div>
+        </div>
+        <p class="qty-label">Jumlah</p>
+        <div class="qty-wrap">
+          <button class="qty-btn" id="qty-minus">−</button>
+          <span class="qty-num" id="qty-value">1</span>
+          <button class="qty-btn" id="qty-plus">+</button>
+        </div>
+        <div class="detail-cta">
+          <button class="btn btn-primary add-to-cart" style="flex:2;justify-content:center;" id="detail-add-btn" data-id="apx1" data-name="Beztro Pro X1" data-price="699000"><i class="ti ti-shopping-cart"></i>Tambah ke Keranjang</button>
+          <button class="btn btn-accent" style="flex:1;justify-content:center;" id="detail-buy-btn">Beli Sekarang</button>
+          <button class="btn btn-outline wishlist-btn" style="padding:10px 14px;"><i class="ti ti-heart"></i></button>
+        </div>
+        <div class="detail-perks">
+          <div class="perk"><i class="ti ti-shield-check" style="color:#16A34A;"></i><span>Garansi 2 tahun</span></div>
+          <div class="perk"><i class="ti ti-truck" style="color:#2563EB;"></i><span>Gratis ongkir</span></div>
+          <div class="perk"><i class="ti ti-refresh" style="color:#D97706;"></i><span>Retur 14 hari</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active">Deskripsi</button>
+      <button class="tab-btn">Spesifikasi</button>
+      <button class="tab-btn">Ulasan (128)</button>
+    </div>
+    <p style="font-size:14px;color:var(--gray-700);line-height:1.85;margin-bottom:14px;" id="detail-desc">Beztro Pro X1 adalah air purifier generasi terbaru dengan teknologi HEPA Filter H13 yang mampu menyaring 99,97% partikel berbahaya termasuk debu, polutan, dan bakteri. Cocok untuk ruangan hingga 40m².</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:500px;">
+      <div style="display:flex;align-items:center;gap:8px;"><i class="ti ti-check" style="color:#16A34A;"></i><span style="font-size:13px;color:var(--gray-700);">HEPA Filter H13 bersertifikat</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><i class="ti ti-check" style="color:#16A34A;"></i><span style="font-size:13px;color:var(--gray-700);">Mode senyap 25dB</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><i class="ti ti-check" style="color:#16A34A;"></i><span style="font-size:13px;color:var(--gray-700);">Sensor kualitas udara otomatis</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><i class="ti ti-check" style="color:#16A34A;"></i><span style="font-size:13px;color:var(--gray-700);">Kontrol via aplikasi smartphone</span></div>
+    </div>
+
+    <p class="related-title" style="margin-top:32px;">Produk Terkait</p>
+    <div class="related-grid">
+      <div class="related-card" onclick="showDetail('apx1')"><div class="related-thumb"><i class="ti ti-device-speaker"></i></div><div><p class="related-name">Beztro Air Mini Compact</p><p class="related-price">Rp 399.000</p></div></div>
+      <div class="related-card" onclick="showDetail('apx1')"><div class="related-thumb"><i class="ti ti-wind"></i></div><div><p class="related-name">Beztro Fresh Air 360°</p><p class="related-price">Rp 549.000</p></div></div>
+      <div class="related-card" onclick="showDetail('apx1')"><div class="related-thumb"><i class="ti ti-device-speaker"></i></div><div><p class="related-name">Beztro Pro X2 Premium</p><p class="related-price">Rp 950.000</p></div></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo-wrap"><span class="logo-name">beztro</span><span class="logo-sub">Electronics</span></a>
+        <p>Distributor terpercaya small home appliances untuk rumah tangga dan bisnis di Indonesia.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn"><i class="ti ti-brand-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="ti ti-brand-facebook"></i></a>
+          <a href="#" class="social-btn"><i class="ti ti-brand-tiktok"></i></a>
+          <a href="#" class="social-btn"><i class="ti ti-brand-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Navigasi</h4><ul><li><a href="index.html">Beranda</a></li><li><a href="produk.html">Produk</a></li><li><a href="blog.html">Blog</a></li><li><a href="tentang-kami.html">Tentang Kami</a></li></ul></div>
+      <div class="footer-col"><h4>Layanan</h4><ul><li><a href="#">Lacak Pesanan</a></li><li><a href="#">Kebijakan Retur</a></li><li><a href="#">FAQ</a></li><li><a href="#">B2B / Reseller</a></li></ul></div>
+      <div class="footer-col"><h4>Hubungi Kami</h4><div class="footer-contact-item"><i class="ti ti-mail"></i><span>hello@beztro.id</span></div><div class="footer-contact-item"><i class="ti ti-brand-whatsapp"></i><span>+62 812-3456-7890</span></div><div class="footer-contact-item"><i class="ti ti-map-pin"></i><span>Jakarta, Indonesia</span></div></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Beztro Electronics. All rights reserved.</p>
+      <div class="footer-bottom-links"><a href="#">Kebijakan Privasi</a><a href="#">Syarat & Ketentuan</a></div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    const products = {
+      apx1: { name: 'Beztro Pro X1 HEPA Filter Air Purifier', cat: 'Air Purifier', price: 'Rp 699.000', priceOld: 'Rp 850.000', icon: 'ti-device-speaker', rating: '4.9', reviews: '128 ulasan', desc: 'Beztro Pro X1 adalah air purifier generasi terbaru dengan teknologi HEPA Filter H13 yang mampu menyaring 99,97% partikel berbahaya termasuk debu, polutan, dan bakteri. Cocok untuk ruangan hingga 40m².' },
+      bm1000: { name: 'Beztro Blend Master 1000W', cat: 'Blender', price: 'Rp 425.000', priceOld: null, icon: 'ti-blender', rating: '4.7', reviews: '94 ulasan', desc: 'Blender bertenaga tinggi 1000W dengan pisau stainless steel 6-bilah yang mampu menghancurkan es batu, buah keras, dan bahan makanan apapun dalam hitungan detik.' },
+      'bp-drip': { name: 'Beztro Brew Pro Drip Coffee', cat: 'Coffee Maker', price: 'Rp 380.000', priceOld: null, icon: 'ti-coffee', rating: '4.9', reviews: '57 ulasan', desc: 'Coffee maker drip otomatis dengan sistem pemanasan presisi yang menghasilkan secangkir kopi dengan suhu dan kekentalan sempurna setiap saat.' },
+      sf16: { name: 'Beztro Silent Fan 16" 3-Speed', cat: 'Desk Fan', price: 'Rp 245.000', priceOld: null, icon: 'ti-snowflake', rating: '4.6', reviews: '211 ulasan', desc: 'Kipas angin 16 inci dengan 3 kecepatan dan teknologi blade aerodinamis yang menghasilkan angin kencang namun senyap — hanya 38dB pada kecepatan tertinggi.' },
+      sc18: { name: 'Beztro Smart Cook 1.8L Digital', cat: 'Rice Cooker', price: 'Rp 310.000', priceOld: null, icon: 'ti-cooker', rating: '4.8', reviews: '76 ulasan', desc: 'Rice cooker digital 1.8L dengan 8 mode memasak termasuk mode nasi putih, nasi merah, bubur, dan slow cook. Dilengkapi timer dan mode penghangat otomatis.' },
+      sp2200: { name: 'Beztro Suction Pro 2200W', cat: 'Vacuum Cleaner', price: 'Rp 580.000', priceOld: null, icon: 'ti-vacuum-cleaner', rating: '4.5', reviews: '43 ulasan', desc: 'Vacuum cleaner 2200W dengan daya hisap ultra-kuat dan sistem filtrasi HEPA yang menangkap debu halus hingga 0.1 mikron. Ideal untuk lantai, karpet, dan sofa.' },
+    };
+
+    function showDetail(id) {
+      const p = products[id];
+      if (!p) return;
+      document.getElementById('detail-name').textContent = p.name;
+      document.getElementById('detail-cat-badge').textContent = p.cat;
+      document.getElementById('detail-price').textContent = p.price;
+      document.getElementById('detail-price-old').textContent = p.priceOld || '';
+      document.getElementById('detail-price-old').style.display = p.priceOld ? '' : 'none';
+      document.getElementById('detail-icon').className = 'ti ' + p.icon;
+      document.getElementById('detail-rating-val').textContent = p.rating;
+      document.getElementById('detail-reviews').textContent = p.reviews;
+      document.getElementById('detail-desc').textContent = p.desc;
+      document.getElementById('detail-breadcrumb').textContent = p.name;
+      document.getElementById('detail-add-btn').dataset.id = id;
+      document.getElementById('detail-add-btn').dataset.name = p.name;
+      document.getElementById('listing-view').style.display = 'none';
+      document.getElementById('breadcrumb').style.display = 'none';
+      document.getElementById('detail-view').classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function showListing() {
+      document.getElementById('listing-view').style.display = 'flex';
+      document.getElementById('breadcrumb').style.display = 'block';
+      document.getElementById('detail-view').classList.remove('active');
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

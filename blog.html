@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Beztro Electronics</title>
+  <meta name="description" content="Tips, review, dan panduan seputar peralatan rumah tangga dari tim Beztro Electronics." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .blog-hero { background: var(--navy); padding: 48px 40px; text-align: center; }
+    .blog-hero .eyebrow { font-size: 12px; color: #A0B0C8; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+    .blog-hero h1 { font-size: 28px; font-weight: 600; color: #fff; margin-bottom: 12px; }
+    .blog-hero p { font-size: 14px; color: #A8C0D8; max-width: 480px; margin: 0 auto 22px; line-height: 1.8; }
+    .search-bar-blog { display: inline-flex; background: var(--navy-light); border-radius: 10px; padding: 10px 16px; gap: 10px; align-items: center; }
+    .search-bar-blog input { background: none; border: none; font-size: 13px; color: #fff; outline: none; width: 240px; font-family: var(--font); }
+    .search-bar-blog input::placeholder { color: var(--gray-600); }
+    .search-bar-blog button { background: var(--navy); border: none; border-radius: 6px; padding: 6px 16px; font-size: 12px; color: #fff; cursor: pointer; font-family: var(--font); }
+
+    .filter-bar { background: #fff; padding: 14px 40px; border-bottom: 1px solid var(--border); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .filter-pill { background: var(--gray-50); color: var(--gray-600); font-size: 12px; padding: 6px 16px; border-radius: 20px; cursor: pointer; border: 1px solid var(--border); transition: all 0.2s; }
+    .filter-pill:hover, .filter-pill.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+    .blog-body { background: var(--gray-50); padding: 28px 40px; display: flex; gap: 22px; }
+    .blog-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+
+    .blog-featured { background: #fff; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; display: flex; }
+    .blog-featured .feat-img { width: 240px; flex-shrink: 0; background: var(--gray-100); display: flex; align-items: center; justify-content: center; }
+    .blog-featured .feat-img i { font-size: 60px; color: var(--gray-400); }
+    .blog-featured .feat-body { padding: 24px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .feat-badges { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+    .feat-title { font-size: 18px; font-weight: 600; color: var(--navy); margin-bottom: 10px; line-height: 1.4; }
+    .feat-excerpt { font-size: 13px; color: var(--gray-700); line-height: 1.75; flex: 1; }
+    .blog-meta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 14px; }
+    .blog-meta .author { display: flex; align-items: center; gap: 6px; }
+    .author-avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; }
+    .author-avatar span { font-size: 9px; color: #fff; font-weight: 600; }
+    .meta-item { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--gray-500); }
+    .meta-item i { font-size: 13px; }
+
+    .blog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .blog-article-card { background: #fff; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; cursor: pointer; transition: transform 0.2s; }
+    .blog-article-card:hover { transform: translateY(-2px); }
+    .article-thumb { height: 120px; background: var(--gray-100); display: flex; align-items: center; justify-content: center; }
+    .article-thumb i { font-size: 48px; color: var(--gray-400); }
+    .article-body { padding: 16px; }
+    .article-title { font-size: 13px; font-weight: 500; color: var(--navy); margin: 8px 0 6px; line-height: 1.4; }
+    .article-excerpt { font-size: 12px; color: var(--gray-600); line-height: 1.65; margin-bottom: 10px; }
+    .article-footer { display: flex; justify-content: space-between; align-items: center; }
+    .read-more { font-size: 12px; color: var(--navy); font-weight: 500; cursor: pointer; }
+
+    .blog-sidebar { width: 210px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px; }
+    .sidebar-card { background: #fff; border-radius: 12px; border: 1px solid var(--border); padding: 18px; }
+    .sidebar-card h4 { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 14px; }
+    .popular-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
+    .popular-num { font-size: 20px; font-weight: 700; color: var(--border); line-height: 1; flex-shrink: 0; }
+    .popular-title { font-size: 12px; color: var(--navy); line-height: 1.4; cursor: pointer; }
+    .popular-title:hover { text-decoration: underline; }
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { background: var(--gray-50); color: var(--gray-700); font-size: 11px; padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border); cursor: pointer; transition: all 0.2s; }
+    .tag:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+    .newsletter-card { background: var(--navy); border-radius: 12px; padding: 18px; text-align: center; }
+    .newsletter-card i { font-size: 26px; color: var(--accent); display: block; margin-bottom: 8px; }
+    .newsletter-card h4 { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 6px; }
+    .newsletter-card p { font-size: 11px; color: #A0B0C8; margin-bottom: 14px; line-height: 1.6; }
+    .newsletter-card input { width: 100%; padding: 9px 10px; border-radius: 6px; border: none; font-size: 12px; margin-bottom: 8px; background: var(--navy-light); color: #fff; font-family: var(--font); }
+    .newsletter-card input::placeholder { color: var(--gray-600); }
+    .newsletter-card button { width: 100%; background: var(--accent); color: #fff; border: none; padding: 9px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: var(--font); }
+
+    /* DETAIL */
+    .blog-detail { display: none; padding: 28px 40px; }
+    .blog-detail.active { display: flex; gap: 22px; }
+    .detail-main { flex: 1; min-width: 0; }
+    .article-cover { width: 100%; height: 200px; background: var(--gray-100); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+    .article-cover i { font-size: 80px; color: var(--gray-400); }
+    .article-full-title { font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 16px; line-height: 1.35; }
+    .article-meta-bar { display: flex; align-items: center; gap: 18px; padding: 14px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 22px; flex-wrap: wrap; }
+    .article-actions { margin-left: auto; display: flex; gap: 8px; }
+    .action-btn { width: 30px; height: 30px; background: var(--gray-50); border-radius: 6px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .action-btn i { font-size: 15px; color: var(--gray-600); }
+    .article-body p { font-size: 14px; color: var(--gray-700); line-height: 1.9; margin-bottom: 16px; }
+    .article-body h2 { font-size: 16px; font-weight: 600; color: var(--navy); margin: 20px 0 8px; }
+    .blockquote { border-left: 3px solid var(--navy); padding-left: 18px; margin: 16px 0; border-radius: 0; }
+    .blockquote p { font-style: italic; color: var(--gray-600); }
+    .product-mention { background: var(--gray-50); border-radius: 10px; padding: 16px; margin: 16px 0; }
+    .product-mention h5 { font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
+    .product-mention-row { background: #fff; border-radius: 8px; border: 1px solid var(--border); padding: 12px; display: flex; gap: 12px; align-items: center; }
+    .pm-thumb { width: 48px; height: 48px; background: var(--gray-100); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .pm-thumb i { font-size: 24px; color: var(--gray-400); }
+    .pm-name { font-size: 12px; font-weight: 500; color: var(--navy); }
+    .pm-price { font-size: 13px; font-weight: 600; color: var(--navy); margin-top: 3px; }
+    .related-articles { margin-top: 28px; }
+    .related-articles h3 { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 14px; }
+    .related-mini-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+    .related-mini { background: #fff; border-radius: 10px; border: 1px solid var(--border); overflow: hidden; cursor: pointer; }
+    .related-mini-thumb { height: 70px; background: var(--gray-100); display: flex; align-items: center; justify-content: center; }
+    .related-mini-thumb i { font-size: 32px; color: var(--gray-400); }
+    .related-mini-body { padding: 10px 12px; }
+    .related-mini-title { font-size: 12px; font-weight: 500; color: var(--navy); line-height: 1.4; margin-bottom: 4px; }
+    .toc-card { background: #fff; border-radius: 12px; border: 1px solid var(--border); padding: 18px; }
+    .toc-card h4 { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 12px; }
+    .toc-item { display: flex; gap: 8px; margin-bottom: 10px; align-items: flex-start; }
+    .toc-num { font-size: 16px; font-weight: 700; color: var(--border); flex-shrink: 0; line-height: 1.1; }
+    .toc-link { font-size: 12px; color: var(--navy); line-height: 1.4; cursor: pointer; }
+    .toc-link:hover { text-decoration: underline; }
+    .toc-link.active { color: var(--accent); font-weight: 500; }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <span><i class="ti ti-truck" style="margin-right:6px;"></i>Gratis ongkir untuk pembelian di atas Rp 300.000</span>
+    <div class="topbar-links"><a href="#">Lacak Pesanan</a><a href="#">Hubungi Kami</a><a href="#">B2B / Reseller</a></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html" class="logo-wrap"><span class="logo-name">beztro</span><span class="logo-sub">Electronics</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Beranda</a></li>
+      <li><a href="produk.html">Produk</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="tentang-kami.html">Tentang Kami</a></li>
+    </ul>
+    <div class="nav-actions">
+      <div class="search-box"><i class="ti ti-search"></i><span>Cari produk...</span></div>
+      <div class="cart-icon"><i class="ti ti-shopping-cart"></i><span class="cart-badge">0</span></div>
+      <div class="user-icon"><i class="ti ti-user"></i></div>
+    </div>
+  </nav>
+
+  <!-- LISTING -->
+  <div id="blog-listing">
+    <div class="blog-hero">
+      <p class="eyebrow">Tips, Review & Inspirasi</p>
+      <h1>Blog Beztro Electronics</h1>
+      <p>Temukan panduan, tips perawatan, dan ulasan produk terbaru untuk rumah yang lebih nyaman.</p>
+      <div class="search-bar-blog">
+        <i class="ti ti-search" style="color:#A0B0C8;font-size:16px;"></i>
+        <input type="text" placeholder="Cari topik atau artikel..." />
+        <button>Cari</button>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <span style="font-size:12px;color:var(--gray-600);margin-right:4px;">Topik:</span>
+      <span class="filter-pill active">Semua</span>
+      <span class="filter-pill">Tips & Trik</span>
+      <span class="filter-pill">Review Produk</span>
+      <span class="filter-pill">Panduan Beli</span>
+      <span class="filter-pill">Perawatan Produk</span>
+      <span class="filter-pill">Inspirasi Rumah</span>
+    </div>
+
+    <div class="blog-body">
+      <main class="blog-main">
+        <div class="blog-featured">
+          <div class="feat-img"><i class="ti ti-wind"></i></div>
+          <div class="feat-body">
+            <div class="feat-badges">
+              <span class="badge badge-cat">Tips & Trik</span>
+              <span class="badge badge-featured">Artikel Pilihan</span>
+            </div>
+            <h2 class="feat-title">5 Tips Memilih Air Purifier yang Tepat untuk Rumah Anda di 2025</h2>
+            <p class="feat-excerpt">Kualitas udara dalam ruangan sering kali lebih buruk dari udara luar. Debu, tungau, bulu hewan peliharaan, dan polutan lainnya bisa berdampak pada kesehatan keluarga Anda setiap hari.</p>
+            <div class="blog-meta">
+              <div class="author"><div class="author-avatar"><span>BT</span></div><span style="font-size:12px;color:var(--gray-600);">Tim Beztro</span></div>
+              <div class="meta-item"><i class="ti ti-calendar"></i>12 Juni 2025</div>
+              <div class="meta-item"><i class="ti ti-clock"></i>5 menit baca</div>
+              <button class="btn btn-primary btn-sm" onclick="showArticle('purifier')" style="margin-left:auto;">Baca Selengkapnya</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="blog-grid">
+          <div class="blog-article-card" onclick="showArticle('blender')">
+            <div class="article-thumb"><i class="ti ti-blender"></i></div>
+            <div class="article-body">
+              <span class="badge badge-green">Review Produk</span>
+              <p class="article-title">Review Blender Beztro 1000W: Performa Maksimal, Harga Terjangkau</p>
+              <p class="article-excerpt">Kami uji performa blender terbaru Beztro selama 30 hari. Hasilnya mengejutkan.</p>
+              <div class="article-footer"><div class="meta-item"><i class="ti ti-calendar"></i>5 Juni 2025</div><span class="read-more">Baca →</span></div>
+            </div>
+          </div>
+          <div class="blog-article-card" onclick="showArticle('perawatan')">
+            <div class="article-thumb"><i class="ti ti-tool"></i></div>
+            <div class="article-body">
+              <span class="badge badge-orange">Perawatan Produk</span>
+              <p class="article-title">Cara Merawat Peralatan Dapur agar Tahan Lama dan Awet</p>
+              <p class="article-excerpt">Ikuti panduan perawatan sederhana ini agar produk Anda tetap prima bertahun-tahun.</p>
+              <div class="article-footer"><div class="meta-item"><i class="ti ti-calendar"></i>28 Mei 2025</div><span class="read-more">Baca →</span></div>
+            </div>
+          </div>
+          <div class="blog-article-card" onclick="showArticle('dapur')">
+            <div class="article-thumb"><i class="ti ti-home"></i></div>
+            <div class="article-body">
+              <span class="badge badge-cat">Inspirasi Rumah</span>
+              <p class="article-title">7 Peralatan Rumah Tangga Wajib Punya di Dapur Modern 2025</p>
+              <p class="article-excerpt">Wujudkan dapur impian dengan pilihan peralatan yang fungsional dan stylish.</p>
+              <div class="article-footer"><div class="meta-item"><i class="ti ti-calendar"></i>20 Mei 2025</div><span class="read-more">Baca →</span></div>
+            </div>
+          </div>
+          <div class="blog-article-card" onclick="showArticle('kopi')">
+            <div class="article-thumb"><i class="ti ti-coffee"></i></div>
+            <div class="article-body">
+              <span class="badge badge-green">Panduan Beli</span>
+              <p class="article-title">Coffee Maker vs French Press: Mana yang Cocok untuk Kamu?</p>
+              <p class="article-excerpt">Panduan lengkap memilih metode seduh kopi terbaik sesuai gaya hidup Anda.</p>
+              <div class="article-footer"><div class="meta-item"><i class="ti ti-calendar"></i>14 Mei 2025</div><span class="read-more">Baca →</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pagination">
+          <button class="page-btn"><i class="ti ti-chevron-left"></i></button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <button class="page-btn"><i class="ti ti-chevron-right"></i></button>
+        </div>
+      </main>
+
+      <aside class="blog-sidebar">
+        <div class="sidebar-card">
+          <h4>Artikel Terpopuler</h4>
+          <div class="popular-item"><span class="popular-num">01</span><p class="popular-title" onclick="showArticle('purifier')">5 Tips Memilih Air Purifier yang Tepat</p></div>
+          <div class="popular-item"><span class="popular-num">02</span><p class="popular-title" onclick="showArticle('blender')">Review Blender Beztro 1000W</p></div>
+          <div class="popular-item"><span class="popular-num">03</span><p class="popular-title" onclick="showArticle('dapur')">7 Peralatan Wajib Dapur Modern 2025</p></div>
+        </div>
+        <div class="sidebar-card">
+          <h4>Topik</h4>
+          <div class="tag-cloud">
+            <span class="tag">Tips & Trik</span>
+            <span class="tag">Review</span>
+            <span class="tag">Panduan Beli</span>
+            <span class="tag">Perawatan</span>
+            <span class="tag">Inspirasi</span>
+          </div>
+        </div>
+        <div class="newsletter-card">
+          <i class="ti ti-bell"></i>
+          <h4>Artikel terbaru tiap minggu</h4>
+          <p>Subscribe newsletter Beztro dan dapatkan tips eksklusif.</p>
+          <form class="subscribe-form">
+            <input type="email" placeholder="Email kamu" />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- DETAIL VIEW -->
+  <div class="blog-detail" id="blog-detail">
+    <main class="detail-main">
+      <div class="breadcrumb" style="padding:0 0 16px;background:none;">
+        <a href="index.html">Beranda</a><span class="sep">/</span>
+        <a href="blog.html" onclick="showListing();return false;">Blog</a><span class="sep">/</span>
+        <span class="current" id="detail-bc">Artikel</span>
+      </div>
+      <div class="article-cover"><i class="ti ti-wind" id="detail-cover-icon"></i></div>
+      <div class="feat-badges" id="detail-badges"><span class="badge badge-cat">Tips & Trik</span><span class="badge badge-featured">Artikel Pilihan</span></div>
+      <h1 class="article-full-title" id="detail-title">5 Tips Memilih Air Purifier yang Tepat untuk Rumah Anda di 2025</h1>
+      <div class="article-meta-bar">
+        <div class="author"><div class="author-avatar"><span>BT</span></div><div><p style="font-size:12px;font-weight:500;color:var(--navy);">Tim Beztro</p><p style="font-size:11px;color:var(--gray-500);">Content Team</p></div></div>
+        <div class="meta-item"><i class="ti ti-calendar"></i><span id="detail-date">12 Juni 2025</span></div>
+        <div class="meta-item"><i class="ti ti-clock"></i><span id="detail-read">5 menit baca</span></div>
+        <div class="meta-item"><i class="ti ti-eye"></i><span>2.340 views</span></div>
+        <div class="article-actions"><div class="action-btn"><i class="ti ti-share"></i></div><div class="action-btn wishlist-btn"><i class="ti ti-heart"></i></div></div>
+      </div>
+      <div class="article-body" id="detail-body"></div>
+      <div class="related-articles">
+        <h3>Artikel Terkait</h3>
+        <div class="related-mini-grid">
+          <div class="related-mini" onclick="showArticle('perawatan')"><div class="related-mini-thumb"><i class="ti ti-tool"></i></div><div class="related-mini-body"><p class="related-mini-title">Cara Merawat Peralatan Dapur agar Tahan Lama</p><span style="font-size:11px;color:var(--navy);font-weight:500;">Baca →</span></div></div>
+          <div class="related-mini" onclick="showArticle('dapur')"><div class="related-mini-thumb"><i class="ti ti-home"></i></div><div class="related-mini-body"><p class="related-mini-title">7 Peralatan Wajib Dapur Modern 2025</p><span style="font-size:11px;color:var(--navy);font-weight:500;">Baca →</span></div></div>
+          <div class="related-mini" onclick="showArticle('blender')"><div class="related-mini-thumb"><i class="ti ti-blender"></i></div><div class="related-mini-body"><p class="related-mini-title">Review Blender Beztro 1000W Terbaru</p><span style="font-size:11px;color:var(--navy);font-weight:500;">Baca →</span></div></div>
+        </div>
+      </div>
+    </main>
+    <aside class="blog-sidebar">
+      <div class="toc-card">
+        <h4>Daftar Isi</h4>
+        <div id="toc-content"></div>
+      </div>
+      <div class="newsletter-card">
+        <i class="ti ti-bell"></i>
+        <h4>Artikel terbaru tiap minggu</h4>
+        <p>Subscribe newsletter Beztro dan dapatkan tips eksklusif.</p>
+        <form class="subscribe-form"><input type="email" placeholder="Email kamu" /><button type="submit">Subscribe</button></form>
+      </div>
+    </aside>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="logo-wrap"><span class="logo-name">beztro</span><span class="logo-sub">Electronics</span></a><p>Distributor terpercaya small home appliances untuk rumah tangga dan bisnis di Indonesia.</p><div class="footer-socials"><a href="#" class="social-btn"><i class="ti ti-brand-instagram"></i></a><a href="#" class="social-btn"><i class="ti ti-brand-facebook"></i></a><a href="#" class="social-btn"><i class="ti ti-brand-tiktok"></i></a><a href="#" class="social-btn"><i class="ti ti-brand-youtube"></i></a></div></div>
+      <div class="footer-col"><h4>Navigasi</h4><ul><li><a href="index.html">Beranda</a></li><li><a href="produk.html">Produk</a></li><li><a href="blog.html">Blog</a></li><li><a href="tentang-kami.html">Tentang Kami</a></li></ul></div>
+      <div class="footer-col"><h4>Layanan</h4><ul><li><a href="#">Lacak Pesanan</a></li><li><a href="#">Kebijakan Retur</a></li><li><a href="#">FAQ</a></li><li><a href="#">B2B / Reseller</a></li></ul></div>
+      <div class="footer-col"><h4>Hubungi Kami</h4><div class="footer-contact-item"><i class="ti ti-mail"></i><span>hello@beztro.id</span></div><div class="footer-contact-item"><i class="ti ti-brand-whatsapp"></i><span>+62 812-3456-7890</span></div><div class="footer-contact-item"><i class="ti ti-map-pin"></i><span>Jakarta, Indonesia</span></div></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Beztro Electronics. All rights reserved.</p><div class="footer-bottom-links"><a href="#">Kebijakan Privasi</a><a href="#">Syarat & Ketentuan</a></div></div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    const articles = {
+      purifier: {
+        title: '5 Tips Memilih Air Purifier yang Tepat untuk Rumah Anda di 2025',
+        icon: 'ti-wind', date: '12 Juni 2025', read: '5 menit baca',
+        toc: ['Perhatikan ukuran ruangan','Cek jenis filter','Tingkat kebisingan','Konsumsi daya listrik','Fitur tambahan'],
+        body: `<p>Kualitas udara di dalam ruangan sering kali lebih buruk dari udara luar. Debu, tungau, bulu hewan peliharaan, dan polutan lainnya bisa berdampak pada kesehatan keluarga Anda setiap hari.</p>
+               <div class="blockquote"><p>"Memilih air purifier yang tepat bukan soal harga, tapi soal memahami kebutuhan ruangan dan keluarga Anda."</p></div>
+               <h2 id="h1">1. Perhatikan ukuran ruangan</h2>
+               <p>Setiap air purifier memiliki kapasitas ruangan yang berbeda, biasanya dinyatakan dalam m². Pastikan memilih unit yang sesuai agar kinerjanya optimal dan tidak boros energi.</p>
+               <h2 id="h2">2. Cek jenis filter yang digunakan</h2>
+               <p>Filter HEPA H13 adalah standar terbaik yang mampu menangkap 99,97% partikel berbahaya berukuran 0,3 mikron. Hindari produk yang hanya menggunakan filter ionizer tanpa HEPA.</p>
+               <div class="product-mention"><h5>Produk Rekomendasi</h5><div class="product-mention-row"><div class="pm-thumb"><i class="ti ti-device-speaker"></i></div><div style="flex:1"><p class="pm-name">Beztro Pro X1 HEPA Filter</p><p class="pm-price">Rp 699.000</p></div><button class="btn btn-primary btn-sm add-to-cart" data-id="apx1" data-name="Beztro Pro X1" data-price="699000">Lihat Produk</button></div></div>
+               <h2 id="h3">3. Tingkat kebisingan</h2>
+               <p>Untuk kamar tidur, pilih unit dengan noise level di bawah 30dB. Mode sleep pada produk Beztro Pro X1 hanya menghasilkan 25dB — hampir tidak terdengar.</p>
+               <h2 id="h4">4. Konsumsi daya listrik</h2>
+               <p>Pilih model dengan konsumsi daya rendah (20-60W) agar tidak membebani tagihan listrik meskipun digunakan 24 jam penuh.</p>
+               <h2 id="h5">5. Fitur tambahan</h2>
+               <p>Fitur seperti sensor udara otomatis, kontrol aplikasi, dan timer adalah nilai tambah yang membuat penggunaan lebih nyaman dan efisien.</p>`
+      },
+      blender: {
+        title: 'Review Blender Beztro 1000W: Performa Maksimal, Harga Terjangkau',
+        icon: 'ti-blender', date: '5 Juni 2025', read: '4 menit baca',
+        toc: ['Desain & build quality','Performa blending','Kebisingan & kebersihan','Nilai untuk uang','Kesimpulan'],
+        body: `<p>Kami menguji Beztro Blend Master 1000W selama 30 hari penuh — dari smoothie pagi, es batu, hingga saus dan adonan kue. Hasilnya? Melebihi ekspektasi untuk harga di kelasnya.</p>
+               <h2 id="h1">Desain & build quality</h2>
+               <p>Body berbahan ABS tebal dengan jar kaca 1.5L yang terasa solid dan bebas BPA. Dasar unit dilengkapi kaki anti-slip yang efektif mencegah sliding saat beroperasi.</p>
+               <h2 id="h2">Performa blending</h2>
+               <p>Motor 1000W dengan pisau 6-bilah stainless steel mampu menghancurkan es batu dalam 15 detik dan menghasilkan smoothie halus tanpa serat dalam 30 detik.</p>
+               <h2 id="h3">Kebisingan & kebersihan</h2>
+               <p>Relatif senyap untuk kelasnya (~78dB). Jar mudah dibersihkan — cukup isi air hangat dan sabun, lalu blend selama 10 detik.</p>
+               <div class="product-mention"><h5>Produk yang Diulas</h5><div class="product-mention-row"><div class="pm-thumb"><i class="ti ti-blender"></i></div><div style="flex:1"><p class="pm-name">Beztro Blend Master 1000W</p><p class="pm-price">Rp 425.000</p></div><button class="btn btn-primary btn-sm add-to-cart" data-id="bm1000" data-name="Blend Master 1000W" data-price="425000">Beli Sekarang</button></div></div>
+               <h2 id="h4">Nilai untuk uang</h2>
+               <p>Di harga Rp 425.000, ini salah satu blender terbaik yang pernah kami uji. Perbandingan harga-performa sangat kompetitif dibanding merek lain di segmen yang sama.</p>
+               <h2 id="h5">Kesimpulan</h2>
+               <p>Rating kami: 4.7/5. Sangat direkomendasikan untuk penggunaan rumahan sehari-hari. Garansi 2 tahun memberikan ketenangan pikiran ekstra.</p>`
+      },
+      perawatan: {
+        title: 'Cara Merawat Peralatan Dapur agar Tahan Lama dan Awet',
+        icon: 'ti-tool', date: '28 Mei 2025', read: '3 menit baca',
+        toc: ['Pembersihan rutin','Penyimpanan yang benar','Perawatan komponen','Servis berkala'],
+        body: `<p>Peralatan rumah tangga berkualitas bisa bertahan 5-10 tahun jika dirawat dengan benar. Berikut panduan praktis dari tim Beztro.</p>
+               <h2 id="h1">Pembersihan rutin</h2>
+               <p>Bersihkan setelah setiap penggunaan menggunakan kain lembap. Hindari perendaman komponen elektronik. Untuk blender, metode self-cleaning dengan air hangat sangat efektif.</p>
+               <h2 id="h2">Penyimpanan yang benar</h2>
+               <p>Simpan di tempat kering, jauh dari sumber panas dan air. Lepas kabel listrik saat tidak digunakan untuk mencegah kerusakan akibat lonjakan arus.</p>
+               <h2 id="h3">Perawatan komponen</h2>
+               <p>Filter air purifier perlu diganti setiap 6-12 bulan. Pisau blender perlu diasah atau diganti setiap 18-24 bulan. Heater elemen rice cooker cukup dilap dengan kain kering.</p>
+               <h2 id="h4">Servis berkala</h2>
+               <p>Bawa produk ke service center resmi Beztro setiap 2 tahun untuk pengecekan menyeluruh. Servis preventif jauh lebih murah dari biaya perbaikan kerusakan besar.</p>`
+      },
+      dapur: {
+        title: '7 Peralatan Rumah Tangga Wajib Punya di Dapur Modern 2025',
+        icon: 'ti-home', date: '20 Mei 2025', read: '6 menit baca',
+        toc: ['Air purifier','Blender serbaguna','Coffee maker','Rice cooker digital','Vacuum cleaner','Toaster oven','Induction cooker'],
+        body: `<p>Dapur modern bukan soal desain semata, tapi juga soal peralatan yang tepat untuk mendukung gaya hidup aktif Anda. Berikut 7 peralatan yang wajib ada.</p>
+               <h2 id="h1">1. Air purifier untuk dapur</h2>
+               <p>Dapur adalah sumber polutan utama dalam rumah. Air purifier di dapur membantu menyaring asap, bau masakan, dan partikel berbahaya dari proses memasak.</p>
+               <h2 id="h2">2. Blender serbaguna</h2>
+               <p>Lebih dari sekadar smoothie — blender modern bisa membuat saus, sup krim, tepung oat, hingga selai kacang. Investasi terbaik untuk dapur aktif.</p>
+               <h2 id="h3">3. Coffee maker otomatis</h2>
+               <p>Kopi berkualitas kafe di rumah sendiri. Hemat biaya ngopi di luar hingga Rp 1,5 juta per bulan hanya dengan investasi satu kali.</p>
+               <h2 id="h4">4. Rice cooker digital</h2>
+               <p>Masak nasi sempurna setiap saat tanpa perlu dipantau. Mode digital memungkinkan Anda memasak berbagai jenis nasi dengan satu tombol.</p>`
+      },
+      kopi: {
+        title: 'Coffee Maker vs French Press: Mana yang Cocok untuk Kamu?',
+        icon: 'ti-coffee', date: '14 Mei 2025', read: '4 menit baca',
+        toc: ['Kemudahan penggunaan','Hasil cita rasa','Biaya & perawatan','Rekomendasi kami'],
+        body: `<p>Pilihan metode seduh kopi sangat personal. Tapi dari sisi praktikalitas sehari-hari, keduanya punya kelebihan masing-masing. Mari kita bandingkan.</p>
+               <h2 id="h1">Kemudahan penggunaan</h2>
+               <p>Coffee maker drip memenangkan ini — cukup isi air, masukkan filter & bubuk kopi, tekan tombol. French press butuh teknik dan timing yang tepat untuk hasil terbaik.</p>
+               <h2 id="h2">Hasil cita rasa</h2>
+               <p>French press menghasilkan kopi dengan body lebih kuat dan kaya karena minyak kopi tidak tersaring. Coffee maker menghasilkan kopi lebih bersih dan konsisten.</p>
+               <h2 id="h3">Biaya & perawatan</h2>
+               <p>French press: murah, awet seumur hidup, tanpa filter sekali pakai. Coffee maker: investasi awal lebih besar, perlu filter berkala, tapi sangat praktis untuk penggunaan harian.</p>
+               <h2 id="h4">Rekomendasi kami</h2>
+               <p>Untuk penggunaan harian dan kemudahan → Coffee Maker Beztro Brew Pro. Untuk pengalaman menikmati kopi artisan di akhir pekan → French Press.</p>
+               <div class="product-mention"><h5>Produk Rekomendasi</h5><div class="product-mention-row"><div class="pm-thumb"><i class="ti ti-coffee"></i></div><div style="flex:1"><p class="pm-name">Beztro Brew Pro Drip Coffee</p><p class="pm-price">Rp 380.000</p></div><button class="btn btn-primary btn-sm add-to-cart" data-id="bp-drip" data-name="Brew Pro Drip Coffee" data-price="380000">Lihat Produk</button></div></div>`
+      }
+    };
+
+    function showArticle(id) {
+      const a = articles[id];
+      if (!a) return;
+      document.getElementById('detail-title').textContent = a.title;
+      document.getElementById('detail-cover-icon').className = 'ti ' + a.icon;
+      document.getElementById('detail-date').textContent = a.date;
+      document.getElementById('detail-read').textContent = a.read;
+      document.getElementById('detail-bc').textContent = a.title.substring(0,40) + '...';
+      document.getElementById('detail-body').innerHTML = a.body;
+      const toc = document.getElementById('toc-content');
+      toc.innerHTML = a.toc.map((t,i) => `<div class="toc-item"><span class="toc-num">0${i+1}</span><a href="#h${i+1}" class="toc-link">${t}</a></div>`).join('');
+      document.getElementById('blog-listing').style.display = 'none';
+      document.getElementById('blog-detail').classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function showListing() {
+      document.getElementById('blog-listing').style.display = 'block';
+      document.getElementById('blog-detail').classList.remove('active');
+    }
+
+    document.querySelectorAll('.filter-pill').forEach(pill => {
+      pill.addEventListener('click', function () {
+        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
